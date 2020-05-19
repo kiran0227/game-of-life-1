@@ -1,0 +1,14 @@
+node('UbuntuServers'){
+    stage('scm'){
+     git 'https://github.com/kiran0227/game-of-life-1.git'   
+    }
+    
+    stage('build'){
+     sh label: '', script: 'mvn package'   
+    }
+    
+    stage('postbuild'){
+     archiveArtifacts 'gameoflife-web/target/*.war'
+     junit 'gameoflife-web/target/surefire-reports/*.xml'
+    }
+}
